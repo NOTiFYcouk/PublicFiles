@@ -1,0 +1,5 @@
+org/primefaces/test/BasicView.class
+org/primefaces/test/TestView.class
+org/primefaces/test/CarService.class
+org/primefaces/test/Car.class
+org/primefaces/test/TestViewCdi.class

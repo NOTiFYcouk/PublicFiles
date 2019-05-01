@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:h="http://java.sun.com/jsf/html">
+
+	<h:head>
+		<title>PrimeFaces Test</title>
+	</h:head>
+	<h:body>
+
+		<h:form id="formCars">
+			<p:selectManyCheckbox id="carColumns" value="#{carService.selectedItems}">
+				<!-- <f:selectItem itemLabel="Id" itemValue="Id"/> -->
+				<f:selectItem itemLabel="Year" itemValue="Year"/>
+				<f:selectItem itemLabel="Brand" itemValue="Brand"/>
+				<f:selectItem itemLabel="Colour" itemValue="Colour"/>
+				<f:selectItem itemLabel="Price" itemValue="Price"/>
+				<f:selectItem itemLabel="Sold" itemValue="Sold"/>
+				<p:ajax listener="#{carService.selectedItemsChanged}" update="formCars:tblCars"/>
+			</p:selectManyCheckbox>
+
+			<p:dataTable id="tblCars" var="car" value="#{dtBasicView.cars}" paginator="true"
+			         rows="5"
+                     multiViewState="true"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     rowsPerPageTemplate="5,10,15,20,25,30,35,40,45,50"
+                     resizableColumns="true"
+                     draggableColumns="true"
+                     scrollWidth="100%">
+
+			<f:facet name="header">
+                <p:commandButton id="columnTogglerCars" type="button" value="Columns" style="float:right"
+                                 icon="pi pi-align-justify"/>
+                <p:columnToggler datasource="tblCars" trigger="columnTogglerCars"/>
+            </f:facet>
+			
+				<p:column headerText="Id" rendered="true">
+					<h:outputText value="#{car.id}" />
+				</p:column>
+
+				<p:column headerText="Year" rendered="#{carService.yearColumnRendered}">
+					<h:outputText value="#{car.year}" />
+				</p:column>
+
+				<p:column headerText="Brand" sortBy="#{car.brand}" rendered="#{carService.brandColumnRendered}">
+					<h:outputText value="#{car.brand}" />
+				</p:column>
+
+				<p:column headerText="Colour" rendered="#{carService.colourColumnRendered}">
+					<h:outputText value="#{car.colour}" />
+				</p:column>
+
+				<p:column headerText="Price" rendered="#{carService.priceColumnRendered}">
+					<h:outputText value="#{car.price}" />
+				</p:column>
+
+				<p:column headerText="Sold" rendered="#{carService.soldColumnRendered}">
+					<h:outputText value="#{car.sold}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+	</h:body>
+</html>
